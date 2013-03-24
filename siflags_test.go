@@ -1,3 +1,5 @@
+// Copyright © 2012-2013 Lawrence E. Bakst. All rights reserved.
+
 package siflags_test
 
 import "siflags"
