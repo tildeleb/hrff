@@ -47,6 +47,7 @@ var SIsufixes map[string]float64 = map[string]float64{
 	"Yi": 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, // yobi
 }
 
+// considering removing this
 func Wrong() {
 	SIsufixes["K"] = SIsufixes["Ki"]
 	SIsufixes["M"] = SIsufixes["Mi"]
