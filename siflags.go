@@ -65,7 +65,7 @@ func getPrefix(s string) (float64, int, bool) {
 	var m float64 = 1
 	var o int = 0
 
-	fmt.Printf("getPrefix: s=%q\n", s)
+	//	fmt.Printf("getPrefix: s=%q\n", s)
 	_, ok := SIsufixes["xxx"] // better way?
 	l := len(s)
 	if l > 1 {
@@ -81,7 +81,7 @@ func getPrefix(s string) (float64, int, bool) {
 			o = 1
 		}
 		m, ok = SIsufixes[s[l-o:]]
-		fmt.Printf("getPrefix: %q, m=%f, l=%d, o=%d, ok=%v\n", s[l-o:], m, l, o, ok)
+		//	fmt.Printf("getPrefix: %q, m=%f, l=%d, o=%d, ok=%v\n", s[l-o:], m, l, o, ok)
 	}
 	return m, l - o, ok
 }
@@ -93,13 +93,9 @@ func (r *Int64Value) Set(s string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Set: v=%d, m=%f, v*m=%v\n", v, m, v*int64(m))
+	// fmt.Printf("Set: v=%d, m=%f, v*m=%v\n", v, m, v*int64(m))
 	*r = Int64Value(v * int64(m))
 	return err
-}
-
-func (v *Int64Value) String() string {
-	return fmt.Sprintf("%d", *v)
 }
 
 func (r *Float64Value) Set(s string) error {
@@ -109,9 +105,15 @@ func (r *Float64Value) Set(s string) error {
 	if !ok {
 		return er
 	}
-	fmt.Printf("Set: v=%f, m=%f, v*m=%v\n", v, m, v*m)
+	// fmt.Printf("Set: v=%f, m=%f, v*m=%v\n", v, m, v*m)
 	*r = Float64Value(v * m)
 	return er
+}
+
+// maybe someday these will actually print numbers out using SI unit prefixes
+// maybe delete for now?
+func (v *Int64Value) String() string {
+	return fmt.Sprintf("%d", *v)
 }
 
 func (v *Float64Value) String() string {
