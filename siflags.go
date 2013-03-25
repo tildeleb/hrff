@@ -48,7 +48,7 @@ var SIsufixes map[string]float64 = map[string]float64{
 }
 
 // considering removing this
-func Wrong() {
+func Classic() {
 	SIsufixes["K"] = SIsufixes["Ki"]
 	SIsufixes["M"] = SIsufixes["Mi"]
 	SIsufixes["G"] = SIsufixes["Gi"]
