@@ -2,7 +2,7 @@
 
 package main
 
-import "siflags"
+import "github.com/tildeleb/siflags"
 import "fmt"
 import "flag"
 
