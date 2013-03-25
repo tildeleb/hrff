@@ -62,6 +62,16 @@ func Classic() {
 type Int64Value int64
 type Float64Value float64
 
+// thanks to my early mentor
+func knot(c rune, chars string) bool {
+	for _, v := range chars {
+		if c == v {
+			return false
+		}
+	}
+	return true
+}
+
 func getPrefix(s string) (float64, int, bool) {
 	var m float64 = 1
 	var o int = 0
@@ -70,19 +80,19 @@ func getPrefix(s string) (float64, int, bool) {
 	_, ok := SIsufixes["xxx"] // better way?
 	l := len(s)
 	if l > 1 {
-		if s[l-1] < '0' || s[l-1] > '9' {
+		if knot(rune(s[l-1]), "0123456789.") {
 			if l > 2 {
-				if s[l-2] < '0' || s[l-2] > '9' {
+				if knot(rune(s[l-2]), "0123456789.+-eE") {
 					o = 2
+				} else {
+					o = 1
 				}
 			} else {
 				o = 1
 			}
-		} else {
-			o = 1
 		}
 		m, ok = SIsufixes[s[l-o:]]
-		//	fmt.Printf("getPrefix: %q, m=%f, l=%d, o=%d, ok=%v\n", s[l-o:], m, l, o, ok)
+		//		fmt.Printf("getPrefix: %q, m=%f, l=%d, o=%d, ok=%v\n", s[l-o:], m, l, o, ok)
 	}
 	return m, l - o, ok
 }

@@ -22,4 +22,7 @@ All standard SI prefixes are supported. In keeping with the SI standard "Ki" is 
 		blocksize = int64(_blocksize)
 	}
 
+##Bugs
+The are a few conlicts with hex numbers. Is "0x1d" 30 or 1 deci? Similar conflicts occur with exa, deka, femto, and atto. I suspect hex numbers aren't very useful with mutiplicative suffixes so the conflict is now resolved if favor of the suffix. I think that's acceptable. It could be fixed by allowing or even forcing a space between the number and then suffix. I'll take feedback on that issue. I'm considering optionally allowing the space with quotes.
+
 
