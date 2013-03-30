@@ -26,6 +26,25 @@ var _f2 siflags.Float64Value = default_f2
 var f2 float64
 
 func TestSIFlags(t *testing.T) {
+
+	_i1.Set("1k")
+	i1 = int64(_i1)
+	if i1 != 1000 {
+		t.Errorf("wanted %d got %d\n", ci1, 1000)
+	}
+
+	_i1.Set("1M")
+	i1 = int64(_i1)
+	if i1 != 1000000 {
+		t.Errorf("wanted %d got %d\n", ci1, 1000000)
+	}
+
+	_i1.Set("1000k")
+	i1 = int64(_i1)
+	if i1 != 1000000 {
+		t.Errorf("wanted %d got %d\n", ci1, 1000000)
+	}
+
 	_i1.Set("1Gi")
 	i1 = int64(_i1)
 	if i1 != ci1 {
