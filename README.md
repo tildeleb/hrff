@@ -1,5 +1,7 @@
 #siflags
 
+***This project under heavy development right now with new capabilities on the way The package name will be changing as will some of the datastructures***
+
 Allows SI unit prefixes to be used as mutiplicative suffixes to numeric flags in Go Lang. This package extends the package "flags" by adding two new types and cooresponding Set(string) methods.
 For example you can use flags like the blocksize argument below:
 
