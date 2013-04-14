@@ -1,6 +1,6 @@
 #siflags
 
-***WARNING: This project under heavy development right now with new capabilities on the way. The package name will be changing as will some of the datastructures. Use at your own risk and the next version will be incompatible in some significant ways. -- leb***
+***WARNING: This project under heavy development right now with new capabilities on the way. The package name will be changing as will some of the datastructures. Use at your own risk as the next version will be incompatible in some significant ways. -- leb***
 
 Allows SI unit prefixes to be used as mutiplicative suffixes to numeric flags in Go Lang. This package extends the package "flags" by adding two new types and cooresponding Set(string) methods.
 For example you can use flags like the blocksize argument below:
