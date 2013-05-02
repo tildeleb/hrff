@@ -7,8 +7,8 @@ Allows two capabilities.
 1. SI unit prefixes to be used as multiplicative suffixes to numeric flags in Go Lang. 
 For example you can use flags like the block size argument below:
 
-	% # set block size to 1024
-	% copy file1 file2 -blocksize=1Ki
+		% # set block size to 1024
+		% copy file1 file2 -blocksize=1Ki
 
 2. Variables with one of the two new types can printed in human readable form, using the %[hH] format character, optionally with a unit string. Lower case 'h' is used to format decimal SI suffixes and upper case 'H" is used to format power of two SI suffixes. For example:
 
