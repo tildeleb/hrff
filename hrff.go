@@ -6,7 +6,8 @@ import "fmt"
 import "strconv"
 import "flag"
 
-// Package allows command line arguments like % dd bs=1Mi
+// Package hrff (human readbale flags and format)
+// Allows command line arguments like % dd bs=1Mi
 // defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
 // My usual approach is to convert them to a build-in int/float type after flags has parsed the command line
 // If you want to use "K", "M", "G", "T", "P", "E" instead of Ki", "Mi", "Gi", "Ti", "Pi", "Ei" please call Classic()
@@ -73,7 +74,7 @@ type Float64 struct {
 	U string
 }
 
-// thanks to my early mentor
+// thanks to my mentor
 func knot(c rune, chars string) bool {
 	for _, v := range chars {
 		if c == v {
