@@ -39,7 +39,7 @@ This package extends the package "flags" by adding two new types and coorespondi
 	func main() {
 		flag.Var(&blocksize, "blocksize", "blocksize for copy")
 		flag.Parse()
-		copy(src, dot, block size.V)
+		copy(src, dot, blocksize.V)
 	}
 
 ##Bugs
