@@ -1,4 +1,4 @@
-#hrff
+#hrff (Human Readable Flags and Formatting)
 
 ***WARNING: This project under heavy development right now with new capabilities on the way. The package name will be changing as will some of the data structures. Use at your own risk as the next version will be incompatible in some significant ways. -- leb***
 
