@@ -1,18 +1,13 @@
 // Copyright © 2012-2013 Lawrence E. Bakst. All rights reserved.
-
-// package main
 package hrff
 
 import "fmt"
 import "strconv"
 
-// import "flag"
-
 // Package hrff (Human Readbale Flags and Formatting)
 // Allows command line arguments like % dd bs=1Mi
+// Provide SI unit formatting via %h and %H format characters
 // Defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
-// My usual approach is to convert them to a build-in int/float type after flags has parsed the command line
-// If you want to use "K", "M", "G", "T", "P", "E" instead of Ki", "Mi", "Gi", "Ti", "Pi", "Ei" please call Classic()
 
 // yes I know about iota but it doesn't really work here and I find what's below clearer
 var SIsufixes map[string]float64 = map[string]float64{
@@ -121,7 +116,7 @@ func pif(val int64, units string, p, w int, order []string) string {
 		val = -val
 	}
 
-	fs := fmt.Sprintf("%%s%%%d.%dd%%s%%s", w, p)
+	fs := fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)
 	// fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
@@ -145,7 +140,7 @@ func pff(val float64, units string, p, w int, order []string) string {
 		val = -val
 	}
 
-	fs := fmt.Sprintf("%%s%%%d.%df%%s%%s", w, p)
+	fs := fmt.Sprintf("%%s%%%d.%df %%s%%s", w, p)
 	// fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
@@ -259,33 +254,3 @@ func (v Int64) Format(s fmt.State, c rune) {
 func (v Float64) Format(s fmt.State, c rune) {
 	f(&v, s, c)
 }
-
-/*
-var tf = flag.Bool("t", false, "test flag")
-
-var i1 Int64 = Int64{2000000, "bps"}
-var i2 Int64 = Int64{V: 3000}
-var f1 Float64 = Float64{-7020000000.1, "B"}
-var f2 Float64 = Float64{.000001, "s"}
-
-var imm1 Int64 = Int64{-40000, ""}
-var imm2 Int64 = Int64{1 * 1024 * 1024 * 1024, ""}
-
-// 6.out -i1=1Ki -i2=2Gi -f1=1H -f2=6m
-func main() {
-	flag.Var(&i1, "10", "i1")
-	flag.Var(&i2, "11", "i2")
-	flag.Var(&f1, "12.1", "f1")
-	flag.Var(&f2, "12.2", "f2")
-
-	flag.Parse()
-	switch {
-	case *tf:
-		fmt.Printf("test\n")
-	default:
-		fmt.Printf("i1=%d, i2=%d, f1=%f, f2=%f, i1=%h, i2=%h, f1=%0.4h, f2=%h, imm1=%h, imm2=%H\n",
-			i1.V, i2.V, f1.V, f2.V, i1, i2, f1, f2, imm1, imm2)
-		fmt.Printf("%10.3h\n", Int64{V: 0, U: "foobars"})
-	}
-}
-*/

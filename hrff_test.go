@@ -2,7 +2,7 @@
 
 package hrff_test
 
-import . "leb/hrff"
+import . "github.com/tildeleb/hrff"
 import "flag"
 import "fmt"
 import "testing"
@@ -82,6 +82,14 @@ func Example001() {
 	fmt.Printf("i1=%d, i2=%d, f1=%f, f2=%f, i1=%h, i2=%h, f1=%0.4h, f2=%h, imm1=%h, imm2=%H\n",
 		i1.V, i2.V, f1.V, f2.V, i1, i2, f1, f2, imm1, imm2)
 	fmt.Printf("%10.3h\n", Int64{V: 0, U: "foobars"})
-	// Output: i1=2000000, i2=3000, f1=-7020000000.100000, f2=0.000001, i1=2Mbps, i2=3k, f1=-7.0200GB, f2=1µs, imm1=-40k, imm2=1Gi
-	//        000foobars
+	// Output: i1=2000000, i2=3000, f1=-7020000000.100000, f2=0.000001, i1=2 Mbps, i2=3 k, f1=-7.0200 GB, f2=1 µs, imm1=-40 k, imm2=1 Gi
+	//        000 foobars
+}
+
+func Example002() {
+	var size Int64 = Int64{3 * 1024 * 1024 * 1024, "B"}
+	var speed Float64 = Float64{2100000, "bps"}
+
+	fmt.Printf("size=%H, speed=%0.2h\n", size, speed)
+	// Output: size=3 GiB, speed=2.10 Mbps
 }
