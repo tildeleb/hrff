@@ -1,14 +1,16 @@
 // Copyright © 2012-2013 Lawrence E. Bakst. All rights reserved.
 
-package main
+// package main
+package hrff
 
 import "fmt"
 import "strconv"
-import "flag"
 
-// Package hrff (human readbale flags and format)
+// import "flag"
+
+// Package hrff (Human Readbale Flags and Formatting)
 // Allows command line arguments like % dd bs=1Mi
-// defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
+// Defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
 // My usual approach is to convert them to a build-in int/float type after flags has parsed the command line
 // If you want to use "K", "M", "G", "T", "P", "E" instead of Ki", "Mi", "Gi", "Ti", "Pi", "Ei" please call Classic()
 
@@ -258,6 +260,7 @@ func (v Float64) Format(s fmt.State, c rune) {
 	f(&v, s, c)
 }
 
+/*
 var tf = flag.Bool("t", false, "test flag")
 
 var i1 Int64 = Int64{2000000, "bps"}
@@ -283,6 +286,6 @@ func main() {
 		fmt.Printf("i1=%d, i2=%d, f1=%f, f2=%f, i1=%h, i2=%h, f1=%0.4h, f2=%h, imm1=%h, imm2=%H\n",
 			i1.V, i2.V, f1.V, f2.V, i1, i2, f1, f2, imm1, imm2)
 		fmt.Printf("%10.3h\n", Int64{V: 0, U: "foobars"})
-
 	}
 }
+*/
