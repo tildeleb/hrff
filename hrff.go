@@ -6,7 +6,7 @@ import "strconv"
 
 // Package hrff (Human Readbale Flags and Formatting)
 // Allows command line arguments like % dd bs=1Mi
-// Provide SI unit formatting via %h and %H format characters
+// Provides SI unit formatting via %h and %H format characters
 // Defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
 
 // yes I know about iota but it doesn't really work here and I find what's below clearer
