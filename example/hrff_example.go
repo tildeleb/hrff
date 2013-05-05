@@ -20,5 +20,5 @@ func main() {
 	flag.Var(&f2, "f2", "f2")
 
 	flag.Parse()
-	fmt.Printf("i1=%H, i2=%H, f1=%0.3h, f2=%h\n", i1, i2, f1, f2)
+	fmt.Printf("i1=%H, i2=%H, f1=%0.3h, f2=%0.0h\n", i1, i2, f1, f2)
 }

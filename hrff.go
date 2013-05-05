@@ -161,13 +161,11 @@ func pff(val float64, units string, p, w int, order []string) string {
 func i(v *Int64, s fmt.State, c rune) {
 	var val int64 = int64(v.V)
 	var str string
+	var w, p int
 
-	w, wok := s.Width()
-	p, pok := s.Precision()
-	// fmt.Printf("i: c=%c, w=%d, wok=%v, p=%d, pok=%v\n", c, w, wok, p, pok)
-	if !wok || !pok {
-		str = ""
-	}
+	w, _ = s.Width()
+	p, _ = s.Precision()
+
 	switch c {
 	case 'h':
 		str = pif(val, v.U, p, w, order)
@@ -178,7 +176,7 @@ func i(v *Int64, s fmt.State, c rune) {
 	case 'v':
 		str = fmt.Sprintf("%v", val)
 	default:
-		fmt.Printf("default\n")
+		// fmt.Printf("default\n")
 		str = fmt.Sprintf("%d", val)
 	}
 	b := []byte(str)
@@ -188,13 +186,11 @@ func i(v *Int64, s fmt.State, c rune) {
 func f(v *Float64, s fmt.State, c rune) {
 	var val float64 = float64(v.V)
 	var str string
+	var w, p int
 
-	w, wok := s.Width()
-	p, pok := s.Precision()
-	// fmt.Printf("f: c=%c, w=%d, wok=%v, p=%d, pok=%v\n", c, w, wok, p, pok)
-	if !wok || !pok {
-		str = ""
-	}
+	w, _ = s.Width()
+	p, _ = s.Precision()
+
 	switch c {
 	case 'h':
 		str = pff(val, v.U, p, w, order)
@@ -205,7 +201,7 @@ func f(v *Float64, s fmt.State, c rune) {
 	case 'v':
 		str = fmt.Sprintf("%v", val)
 	default:
-		fmt.Printf("default\n")
+		// fmt.Printf("default\n")
 		str = fmt.Sprintf("%d", val)
 	}
 	b := []byte(str)
