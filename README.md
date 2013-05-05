@@ -3,14 +3,14 @@
 Provides two capabilities:
 
 1. Human readable command line arguments.
-SI unit prefixes to be used as multiplicative suffixes to numeric flags in Go Lang. 
+SI unit prefixes can be used as multiplicative suffixes to numeric flags on the Go command line CLI. 
 For example you can use flags like the block size argument below:
 
 		% # set block size to 1024
 		% copy file1 file2 -blocksize=1Ki
 
 2. Human readable formatted output with optional units.
-Variables that use one of the two new types can printed in human readable format, using the %[hH] format character, optionally with a unit string. Lower case 'h' is used to format decimal SI suffixes and upper case 'H" is used to format power of two SI suffixes. For example:
+Variables that use one of the two new types can printed in human readable format using the %[hH] format character, optionally with a unit string. Lower case 'h' is used to format using decimal SI suffixes and upper case 'H" is used to format using power of two SI suffixes. For example:
 
 		var size Int64 = Int64{3 * 1024 * 1024 * 1024, "B"}
 		var speed Float64 = Float64{2100000, "bps"}
@@ -33,13 +33,15 @@ This package "extends" the package flags by adding two new types and correspondi
 			V float64
 			U string
 		}
+V is for "value" and U is for the optional "units" string.
 
 ##Usage
-	var blocksize hrff.Int64 = Int64{V: 512, U: ""}
+	var blocksize hrff.Int64 = Int64{V: 4096, U: ""}
 
 	func main() {
 		flag.Var(&blocksize, "blocksize", "blocksize for copy")
 		flag.Parse()
+		fmt.Printf(blocksize=%H\n", blocksize)
 		copy(src, dot, blocksize.V)
 	}
 
