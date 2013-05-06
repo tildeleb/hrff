@@ -1,4 +1,4 @@
-#Human Readable Flags and Formatting
+#Human Readable Flags and Formatting (Beta)
 
 Provides two capabilities:
 
