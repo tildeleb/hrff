@@ -49,6 +49,7 @@ var SIsufixes map[string]float64 = map[string]float64{
 
 var order []string = []string{"H", "Y", "Z", "E", "P", "T", "G", "M", "k", "h", "da", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
 var order2 []string = []string{"Yi", "Zi", "Ei", "Pi", "Ti", "Gi", "Mi", "Ki", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
+var skips map[string]bool = map[string]bool{"h": true, "da": true, "d": true, "c": true}
 
 // considering removing this
 func Classic() {
@@ -69,6 +70,16 @@ type Int64 struct {
 type Float64 struct {
 	V float64
 	U string
+}
+
+func Skip(sip string, b bool) {
+	skips[sip] = b
+}
+
+func NoSkips() {
+	for k := range skips {
+		skips[k] = false
+	}
 }
 
 // thanks to my mentor
@@ -115,18 +126,25 @@ func pif(val int64, units string, p, w int, order []string) string {
 		sgn = "-"
 		val = -val
 	}
+	if val == 0 {
+		p = 1
+	}
 
 	fs := fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)
 	// fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
 		//		fmt.Printf("Format: try %q, ", sip)
+		if skips[sip] {
+			continue
+		}
 		if (SIsufixes[sip] <= float64(val)) || (sip == "" && val == 0) {
 			break
 		}
 	}
 	// fmt.Printf("pif: sip=%q\n", sip)
 	val = val / int64(SIsufixes[sip])
+	//	fmt.Printf("pif: val=%d\n", val)
 	return fmt.Sprintf(fs, sgn, val, sip, units)
 }
 
@@ -139,20 +157,29 @@ func pff(val float64, units string, p, w int, order []string) string {
 		sgn = "-"
 		val = -val
 	}
+	if val == 0 {
+		w = 1
+	}
 
 	fs := fmt.Sprintf("%%s%%%d.%df %%s%%s", w, p)
 	// fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
+		if skips[sip] {
+			continue
+		}
 		//		fmt.Printf("pff: %q, %f <= %f\n", sip, SIsufixes[sip], val)
 		if SIsufixes[sip] == 1 {
+			if val == 0.0 || val == 1.0 {
+				break
+			}
 			continue
 		}
 		if SIsufixes[sip] <= val {
 			break
 		}
 	}
-	// fmt.Printf("pff: i=%d, sip=%q\n", i, sip)
+	//	fmt.Printf("pff: val=%f, sip=%q\n", val, sip)
 	val = val / SIsufixes[sip]
 	str := fmt.Sprintf(fs, sgn, val, sip, units)
 	return str

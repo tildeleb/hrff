@@ -83,7 +83,7 @@ func Example001() {
 		i1.V, i2.V, f1.V, f2.V, i1, i2, f1, f2, imm1, imm2)
 	fmt.Printf("%10.3h\n", Int64{V: 0, U: "foobars"})
 	// Output: i1=2000000, i2=3000, f1=-7020000000.100000, f2=0.000001, i1=2 Mbps, i2=3 k, f1=-7.0200 GB, f2=1 µs, imm1=-40 k, imm2=1 Gi
-	//        000 foobars
+	//          0 foobars
 }
 
 func Example002() {
@@ -92,4 +92,32 @@ func Example002() {
 
 	fmt.Printf("size=%H, speed=%0.2h\n", size, speed)
 	// Output: size=3 GiB, speed=2.10 Mbps
+}
+
+func Example003() {
+	var v Int64 = Int64{0, "B"}
+
+	fmt.Printf("v=%h\n", v)
+	// Output: v=0 B
+}
+
+func Example004() {
+	var v Int64 = Int64{1, "B"}
+
+	fmt.Printf("v=%h\n", v)
+	// Output: v=1 B
+}
+
+func Example005() {
+	var v Float64 = Float64{0, "B"}
+
+	fmt.Printf("v=%h\n", v)
+	// Output: v=0 B
+}
+
+func Example006() {
+	var v Float64 = Float64{1, "B"}
+
+	fmt.Printf("v=%h\n", v)
+	// Output: v=1 B
 }
