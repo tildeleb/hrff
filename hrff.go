@@ -1,4 +1,5 @@
 // Copyright © 2012-2013 Lawrence E. Bakst. All rights reserved.
+
 package hrff
 
 import "fmt"
@@ -37,11 +38,11 @@ var SIsufixes map[string]float64 = map[string]float64{
 
 	"u": .000001, // micro (with u)
 
-	"Ki": 1024,                                                  // kibi	
-	"Mi": 1024 * 1024,                                           // mebi	
-	"Gi": 1024 * 1024 * 1024,                                    // gibi	
-	"Ti": 1024 * 1024 * 1024 * 1024,                             // tebi	
-	"Pi": 1024 * 1024 * 1024 * 1024 * 1024,                      // pebi	
+	"Ki": 1024,                                                  // kibi
+	"Mi": 1024 * 1024,                                           // mebi
+	"Gi": 1024 * 1024 * 1024,                                    // gibi
+	"Ti": 1024 * 1024 * 1024 * 1024,                             // tebi
+	"Pi": 1024 * 1024 * 1024 * 1024 * 1024,                      // pebi
 	"Ei": 1024 * 1024 * 1024 * 1024 * 1024 * 1024,               // exbi
 	"Zi": 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,        // zebi
 	"Yi": 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, // yobi
@@ -63,12 +64,18 @@ func Classic() {
 	SIsufixes["Y"] = SIsufixes["Yi"]
 }
 
-type Int64 struct {
-	V int64
+type Int struct {
+	V int
 	U string
 }
+
 type Float64 struct {
 	V float64
+	U string
+}
+
+type Int64 struct {
+	V int64
 	U string
 }
 
@@ -162,7 +169,7 @@ func pff(val float64, units string, p, w int, order []string) string {
 	}
 
 	fs := fmt.Sprintf("%%s%%%d.%df %%s%%s", w, p)
-	// fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
+	//fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
 		if skips[sip] {

@@ -121,3 +121,10 @@ func Example006() {
 	fmt.Printf("v=%h\n", v)
 	// Output: v=1 B
 }
+
+func Example007() {
+	var v Float64 = Float64{1024 * 1024 * 1024, "B"}
+
+	fmt.Printf("v=%h\n", v)
+	// Output: v=1 GB
+}
