@@ -1,16 +1,15 @@
-// Copyright © 2012-2013 Lawrence E. Bakst. All rights reserved.
-
-package hrff
-
-import "fmt"
-import "strconv"
+// Copyright © 2012-2014 Lawrence E. Bakst. All rights reserved.
 
 // Package hrff (Human Readbale Flags and Formatting)
 // Allows command line arguments like % dd bs=1Mi
 // Provides SI unit formatting via %h and %H format characters
 // Defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
+package hrff
 
-// yes I know about iota but it doesn't really work here and I find what's below clearer
+import "fmt"
+import "strconv"
+
+// SIsufixes is public so you can add a prefix if you want to
 var SIsufixes map[string]float64 = map[string]float64{
 	"H": 1000000000000000000000000000, // hella (one for the team)
 
@@ -64,16 +63,19 @@ func Classic() {
 	SIsufixes["Y"] = SIsufixes["Yi"]
 }
 
+// Use this type isntead of int
 type Int struct {
 	V int
 	U string
 }
 
+// use this type instead of float64
 type Float64 struct {
 	V float64
 	U string
 }
 
+// use this type instead of int64
 type Int64 struct {
 	V int64
 	U string
@@ -124,6 +126,7 @@ func getPrefix(s string) (float64, int, bool) {
 	return m, l - o, ok
 }
 
+// print integer format
 func pif(val int64, units string, p, w int, order []string) string {
 	var sip string
 
@@ -155,6 +158,7 @@ func pif(val int64, units string, p, w int, order []string) string {
 	return fmt.Sprintf(fs, sgn, val, sip, units)
 }
 
+// print floating format
 func pff(val float64, units string, p, w int, order []string) string {
 	var sip string
 
@@ -192,6 +196,7 @@ func pff(val float64, units string, p, w int, order []string) string {
 	return str
 }
 
+// called to parse format descriptor
 func i(v *Int64, s fmt.State, c rune) {
 	var val int64 = int64(v.V)
 	var str string
@@ -207,6 +212,15 @@ func i(v *Int64, s fmt.State, c rune) {
 		str = pif(val, v.U, p, w, order2)
 	case 'd':
 		str = fmt.Sprintf("%d", val)
+	case 'D':
+		tmp := fmt.Sprintf("%d", val)
+		str = ""
+		for k := range tmp {
+			str = string(tmp[len(tmp)-k-1]) + str
+			if (k+1)%3 == 0 {
+				str = "," + str
+			}
+		}
 	case 'v':
 		str = fmt.Sprintf("%v", val)
 	default:
@@ -217,6 +231,7 @@ func i(v *Int64, s fmt.State, c rune) {
 	s.Write(b)
 }
 
+// called to parse format descriptor
 func f(v *Float64, s fmt.State, c rune) {
 	var val float64 = float64(v.V)
 	var str string
@@ -255,6 +270,18 @@ func (r *Int64) Set(s string) error {
 	return err
 }
 
+func (r *Int) Set(s string) error {
+
+	m, l, _ := getPrefix(s)
+	v, err := strconv.ParseInt(s[:l], 10, 64)
+	if err != nil {
+		return err
+	}
+	// fmt.Printf("Set: v=%d, m=%f, v*m=%v\n", v, m, v*int64(m))
+	r.V = int(v * int64(m))
+	return err
+}
+
 func (r *Float64) Set(s string) error {
 
 	m, l, ok := getPrefix(s)
@@ -272,6 +299,11 @@ func (v Int64) String() string {
 	return fmt.Sprintf("%s", pif(v.V, v.U, 0, 0, order))
 }
 
+func (v Int) String() string {
+	//	fmt.Printf("String: I\n")
+	return fmt.Sprintf("%s", pif(int64(v.V), v.U, 0, 0, order))
+}
+
 func (v Float64) String() string {
 	//	fmt.Printf("String: F\n")
 	return fmt.Sprintf("%s", pff(v.V, v.U, 0, 0, order))
@@ -279,6 +311,13 @@ func (v Float64) String() string {
 
 func (v Int64) Format(s fmt.State, c rune) {
 	i(&v, s, c)
+}
+
+func (v Int) Format(s fmt.State, c rune) {
+	var v2 Int64
+	i(&v2, s, c)
+	v.V = int(v2.V)
+	v.U = v2.U
 }
 
 func (v Float64) Format(s fmt.State, c rune) {

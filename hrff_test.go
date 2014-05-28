@@ -128,3 +128,9 @@ func Example007() {
 	fmt.Printf("v=%h\n", v)
 	// Output: v=1 GB
 }
+
+func Example008() {
+	var v Int64 = Int64{1000, "B"}
+	fmt.Printf("v=%D\n", v)
+	// Output: v=1,000
+}

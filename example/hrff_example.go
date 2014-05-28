@@ -1,4 +1,4 @@
-// Copyright © 2012-2013 Lawrence E. Bakst. All rights reserved.
+// Copyright © 2012-2014 Lawrence E. Bakst. All rights reserved.
 
 package main
 
