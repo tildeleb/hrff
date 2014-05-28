@@ -134,3 +134,9 @@ func Example008() {
 	fmt.Printf("v=%D\n", v)
 	// Output: v=1,000
 }
+
+func Example009() {
+	var v Int = Int{1000, "B"}
+	fmt.Printf("v=%D\n", v)
+	// Output: v=1,000
+}

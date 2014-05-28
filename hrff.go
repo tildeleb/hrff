@@ -314,10 +314,8 @@ func (v Int64) Format(s fmt.State, c rune) {
 }
 
 func (v Int) Format(s fmt.State, c rune) {
-	var v2 Int64
+	v2 := Int64{int64(v.V), v.U}
 	i(&v2, s, c)
-	v.V = int(v2.V)
-	v.U = v2.U
 }
 
 func (v Float64) Format(s fmt.State, c rune) {
