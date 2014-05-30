@@ -140,3 +140,28 @@ func Example009() {
 	fmt.Printf("v=%D\n", v)
 	// Output: v=1,000
 }
+
+func Example010() {
+	var v Int = Int{-100, "B"}
+	fmt.Printf("v=%D\n", v)
+	// Output: v=-100
+}
+
+
+func Example011() {
+	var v Int = Int{-1000, "B"}
+	fmt.Printf("v=%D\n", v)
+	// Output: v=-1,000
+}
+
+func Example012() {
+	var v Int = Int{1234567, "B"}
+	fmt.Printf("v=%D\n", v)
+	// Output: v=1,234,567
+}
+
+func Example013() {
+	var v Int = Int{-1234567, "B"}
+	fmt.Printf("v=%D\n", v)
+	// Output: v=-1,234,567
+}

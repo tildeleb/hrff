@@ -216,10 +216,15 @@ func i(v *Int64, s fmt.State, c rune) {
 		tmp := fmt.Sprintf("%d", val)
 		str = ""
 		for k := range tmp {
-			str = string(tmp[len(tmp)-k-1]) + str
-			if (k+1)%3 == 0 {
+			c := string(tmp[len(tmp)-k-1])
+			if c < `0` || c > `9` {
+				str = tmp[0 : len(tmp)-k] + str
+				break
+			}
+			if k > 0 && k%3 == 0 {
 				str = "," + str
 			}
+			str = c + str
 		}
 	case 'v':
 		str = fmt.Sprintf("%v", val)
