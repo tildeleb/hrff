@@ -10,7 +10,7 @@ import "fmt"
 import "strconv"
 
 // SIsufixes is public so you can add a prefix if you want to
-var SIsufixes map[string]float64 = map[string]float64{
+var SIsufixes = map[string]float64{
 	"H": 1000000000000000000000000000, // hella (one for the team)
 
 	"Y":  1000000000000000000000000, // yota
@@ -47,9 +47,9 @@ var SIsufixes map[string]float64 = map[string]float64{
 	"Yi": 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, // yobi
 }
 
-var order []string = []string{"H", "Y", "Z", "E", "P", "T", "G", "M", "k", "h", "da", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
-var order2 []string = []string{"Yi", "Zi", "Ei", "Pi", "Ti", "Gi", "Mi", "Ki", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
-var skips map[string]bool = map[string]bool{"h": true, "da": true, "d": true, "c": true}
+var order = []string{"H", "Y", "Z", "E", "P", "T", "G", "M", "k", "h", "da", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
+var order2 = []string{"Yi", "Zi", "Ei", "Pi", "Ti", "Gi", "Mi", "Ki", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
+var skips = map[string]bool{"h": true, "da": true, "d": true, "c": true}
 
 // considering removing this
 func Classic() {
@@ -198,12 +198,14 @@ func pff(val float64, units string, p, w int, order []string) string {
 
 // called to parse format descriptor
 func i(v *Int64, s fmt.State, c rune) {
-	var val int64 = int64(v.V)
+	var val = int64(v.V)
 	var str string
 	var w, p int
 
+	// not checking is OK because 0 is the default behavior
 	w, _ = s.Width()
 	p, _ = s.Precision()
+	//mi, pl, sh, sp, ze := s.Flag('-'), s.Flag('+'), s.Flag('#'), s.Flag(' '), s.Flag('0')
 
 	switch c {
 	case 'h':
@@ -213,7 +215,8 @@ func i(v *Int64, s fmt.State, c rune) {
 	case 'd':
 		str = fmt.Sprintf("%d", val)
 	case 'D':
-		tmp := fmt.Sprintf("%d", val)
+		fs := fmt.Sprintf("%%%d.%dd", w, p)
+		tmp := fmt.Sprintf(fs, val)
 		str = ""
 		for k := range tmp {
 			c := string(tmp[len(tmp)-k-1])
@@ -238,7 +241,7 @@ func i(v *Int64, s fmt.State, c rune) {
 
 // called to parse format descriptor
 func f(v *Float64, s fmt.State, c rune) {
-	var val float64 = float64(v.V)
+	var val = float64(v.V)
 	var str string
 	var w, p int
 

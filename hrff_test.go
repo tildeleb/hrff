@@ -7,18 +7,18 @@ import "flag"
 import "fmt"
 import "testing"
 
-var _i1 Int64 = Int64{V: 2}
+var _i1 = Int64{V: 2}
 var i1 int64
 
 const ci1 = 1 * 1024 * 1024 * 1024
 const ci2 = -2
 
-var _i2 Int64 = Int64{V: 3}
+var _i2 = Int64{V: 3}
 var i2 int64
 
-var _f1 Float64 = Float64{V: 4.5}
+var _f1 = Float64{V: 4.5}
 var f1 float64
-var _f2 Float64 = Float64{V: 5.5}
+var _f2 = Float64{V: 5.5}
 var f2 float64
 
 func TestHRFF(t *testing.T) {
@@ -65,13 +65,13 @@ func TestHRFF(t *testing.T) {
 }
 
 func Example001() {
-	var i1 Int64 = Int64{2000000, "bps"}
-	var i2 Int64 = Int64{V: 3000}
-	var f1 Float64 = Float64{-7020000000.1, "B"}
-	var f2 Float64 = Float64{.000001, "s"}
+	var i1 = Int64{2000000, "bps"}
+	var i2 = Int64{V: 3000}
+	var f1 = Float64{-7020000000.1, "B"}
+	var f2 = Float64{.000001, "s"}
 
-	var imm1 Int64 = Int64{-40000, ""}
-	var imm2 Int64 = Int64{1 * 1024 * 1024 * 1024, ""}
+	var imm1 = Int64{-40000, ""}
+	var imm2 = Int64{1 * 1024 * 1024 * 1024, ""}
 
 	flag.Var(&i1, "10", "i1")
 	flag.Var(&i2, "11", "i2")
@@ -87,81 +87,81 @@ func Example001() {
 }
 
 func Example002() {
-	var size Int64 = Int64{3 * 1024 * 1024 * 1024, "B"}
-	var speed Float64 = Float64{2100000, "bps"}
+	var size = Int64{3 * 1024 * 1024 * 1024, "B"}
+	var speed = Float64{2100000, "bps"}
 
 	fmt.Printf("size=%H, speed=%0.2h\n", size, speed)
 	// Output: size=3 GiB, speed=2.10 Mbps
 }
 
 func Example003() {
-	var v Int64 = Int64{0, "B"}
+	var v = Int64{0, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=0 B
 }
 
 func Example004() {
-	var v Int64 = Int64{1, "B"}
+	var v = Int64{1, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=1 B
 }
 
 func Example005() {
-	var v Float64 = Float64{0, "B"}
+	var v  = Float64{0, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=0 B
 }
 
 func Example006() {
-	var v Float64 = Float64{1, "B"}
+	var v = Float64{1, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=1 B
 }
 
 func Example007() {
-	var v Float64 = Float64{1024 * 1024 * 1024, "B"}
+	var v = Float64{1024 * 1024 * 1024, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=1 GB
 }
 
 func Example008() {
-	var v Int64 = Int64{1000, "B"}
+	var v = Int64{1000, "B"}
 	fmt.Printf("v=%D\n", v)
 	// Output: v=1,000
 }
 
 func Example009() {
-	var v Int = Int{1000, "B"}
+	var v = Int{1000, "B"}
 	fmt.Printf("v=%D\n", v)
 	// Output: v=1,000
 }
 
 func Example010() {
-	var v Int = Int{-100, "B"}
+	var v = Int{-100, "B"}
 	fmt.Printf("v=%D\n", v)
 	// Output: v=-100
 }
 
 
 func Example011() {
-	var v Int = Int{-1000, "B"}
+	var v = Int{-1000, "B"}
 	fmt.Printf("v=%D\n", v)
 	// Output: v=-1,000
 }
 
 func Example012() {
-	var v Int = Int{1234567, "B"}
+	var v = Int{1234567, "B"}
 	fmt.Printf("v=%D\n", v)
 	// Output: v=1,234,567
 }
 
 func Example013() {
-	var v Int = Int{-1234567, "B"}
+	var v = Int{-1234567, "B"}
 	fmt.Printf("v=%D\n", v)
 	// Output: v=-1,234,567
 }
