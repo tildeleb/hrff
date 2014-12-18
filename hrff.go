@@ -127,10 +127,10 @@ func getPrefix(s string) (float64, int, bool) {
 }
 
 // print integer format
-func pif(val int64, units string, p, w int, order []string) string {
+func pif(val int64, units string, w, p int, okw, okp bool, order []string) string {
 	var sip string
 
-	// fmt.Printf("pif: %d\n", val)
+	//fmt.Printf("pif: %d\n", val)
 	sgn := ""
 	if val < 0 {
 		sgn = "-"
@@ -140,8 +140,21 @@ func pif(val int64, units string, p, w int, order []string) string {
 		p = 1
 	}
 
-	fs := fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)
-	// fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
+	//fs := fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)
+	fs := ""
+	switch {
+	case okw == false && okp == false:
+		fs = fmt.Sprintf("%%s%%%d.%dd %%s%%s", 0, 0)
+	case okw == false && okp == true:
+		fs = fmt.Sprintf("%%s%%.%dd %%s%%s", p)
+	case okw == true && okp == false:
+		fs = fmt.Sprintf("%%s%%%d.d %%s%%s", w)
+	case okw == true && okp == true:
+		fs = fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)
+	}
+
+
+	//fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
 		//		fmt.Printf("Format: try %q, ", sip)
@@ -152,14 +165,14 @@ func pif(val int64, units string, p, w int, order []string) string {
 			break
 		}
 	}
-	// fmt.Printf("pif: sip=%q\n", sip)
+	//fmt.Printf("pif: sip=%q\n", sip)
 	val = val / int64(SIsufixes[sip])
-	//	fmt.Printf("pif: val=%d\n", val)
+	//fmt.Printf("pif: val=%d\n", val)
 	return fmt.Sprintf(fs, sgn, val, sip, units)
 }
 
 // print floating format
-func pff(val float64, units string, p, w int, order []string) string {
+func pff(val float64, units string, w, p int, okw, okp bool, order []string) string {
 	var sip string
 
 	// fmt.Printf("pff: %f\n", val)
@@ -172,7 +185,17 @@ func pff(val float64, units string, p, w int, order []string) string {
 		w = 1
 	}
 
-	fs := fmt.Sprintf("%%s%%%d.%df %%s%%s", w, p)
+	fs := ""
+	switch {
+	case okw == false && okp == false:
+		fs = fmt.Sprintf("%%s%%%d.%df %%s%%s", 0, 0)
+	case okw == false && okp == true:
+		fs = fmt.Sprintf("%%s%%.%df %%s%%s", p)
+	case okw == true && okp == false:
+		fs = fmt.Sprintf("%%s%%%d.f %%s%%s", w)
+	case okw == true && okp == true:
+		fs = fmt.Sprintf("%%s%%%d.%df %%s%%s", w, p)
+	}
 	//fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
@@ -201,17 +224,19 @@ func i(v *Int64, s fmt.State, c rune) {
 	var val = int64(v.V)
 	var str string
 	var w, p int
+	var okw, okp bool
 
 	// not checking is OK because 0 is the default behavior
-	w, _ = s.Width()
-	p, _ = s.Precision()
+	w, okw = s.Width()
+	p, okp = s.Precision()
+	//fmt.Printf("i: w=%d, okw=%v, p=%d, okp=%v\n", w, okw, p, okp)
 	//mi, pl, sh, sp, ze := s.Flag('-'), s.Flag('+'), s.Flag('#'), s.Flag(' '), s.Flag('0')
 
 	switch c {
 	case 'h':
-		str = pif(val, v.U, p, w, order)
+		str = pif(val, v.U, w, p, okw, okp, order)
 	case 'H':
-		str = pif(val, v.U, p, w, order2)
+		str = pif(val, v.U, w, p, okw, okp, order2)
 	case 'd':
 		str = fmt.Sprintf("%d", val)
 	case 'D':
@@ -244,22 +269,23 @@ func f(v *Float64, s fmt.State, c rune) {
 	var val = float64(v.V)
 	var str string
 	var w, p int
+	var okw, okp bool
 
-	w, _ = s.Width()
-	p, _ = s.Precision()
+	w, okw = s.Width()
+	p, okp = s.Precision()
 
 	switch c {
 	case 'h':
-		str = pff(val, v.U, p, w, order)
+		str = pff(val, v.U, w, p, okw, okp, order)
 	case 'H':
-		str = pff(val, v.U, p, w, order2)
+		str = pff(val, v.U, w, p, okw, okp, order2)
 	case 'd':
-		str = fmt.Sprintf("%d", val)
+		str = fmt.Sprintf("%d", int(val))
 	case 'v':
 		str = fmt.Sprintf("%v", val)
 	default:
 		// fmt.Printf("default\n")
-		str = fmt.Sprintf("%d", val)
+		str = fmt.Sprintf("%d", int(val))
 	}
 	b := []byte(str)
 	s.Write(b)
@@ -304,17 +330,17 @@ func (r *Float64) Set(s string) error {
 
 func (v Int64) String() string {
 	//	fmt.Printf("String: I\n")
-	return fmt.Sprintf("%s", pif(v.V, v.U, 0, 0, order))
+	return fmt.Sprintf("%s", pif(v.V, v.U, 0, 0, true, true, order))
 }
 
 func (v Int) String() string {
 	//	fmt.Printf("String: I\n")
-	return fmt.Sprintf("%s", pif(int64(v.V), v.U, 0, 0, order))
+	return fmt.Sprintf("%s", pif(int64(v.V), v.U, 0, 0, true, true, order))
 }
 
 func (v Float64) String() string {
 	//	fmt.Printf("String: F\n")
-	return fmt.Sprintf("%s", pff(v.V, v.U, 0, 0, order))
+	return fmt.Sprintf("%s", pff(v.V, v.U, 0, 0, true, true, order))
 }
 
 func (v Int64) Format(s fmt.State, c rune) {
