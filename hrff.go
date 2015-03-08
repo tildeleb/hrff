@@ -4,7 +4,7 @@
 // Allows command line arguments like % dd bs=1Mi
 // Provides SI unit formatting via %h and %H format characters
 // Defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
-package hrff
+package hrff // import "leb.io/hrff"
 
 import "fmt"
 import "strconv"
