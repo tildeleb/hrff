@@ -109,7 +109,7 @@ func Example004() {
 }
 
 func Example005() {
-	var v  = Float64{0, "B"}
+	var v = Float64{0, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=0 B
@@ -146,7 +146,6 @@ func Example010() {
 	fmt.Printf("v=%D\n", v)
 	// Output: v=-100
 }
-
 
 func Example011() {
 	var v = Int{-1000, "B"}

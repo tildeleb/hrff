@@ -153,7 +153,6 @@ func pif(val int64, units string, w, p int, okw, okp bool, order []string) strin
 		fs = fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)
 	}
 
-
 	//fmt.Printf("sgn=%q, fs=%q\n", sgn, fs)
 
 	for _, sip = range order {
@@ -246,7 +245,7 @@ func i(v *Int64, s fmt.State, c rune) {
 		for k := range tmp {
 			c := string(tmp[len(tmp)-k-1])
 			if c < `0` || c > `9` {
-				str = tmp[0 : len(tmp)-k] + str
+				str = tmp[0:len(tmp)-k] + str
 				break
 			}
 			if k > 0 && k%3 == 0 {
