@@ -164,3 +164,9 @@ func Example013() {
 	fmt.Printf("v=%D\n", v)
 	// Output: v=-1,234,567
 }
+
+func Example015() {
+	var v = Float64{0, "B"}
+	fmt.Printf("v=%h\n", v)
+	// Output: v=0 B
+}

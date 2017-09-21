@@ -23,7 +23,7 @@ var SIsufixes = map[string]float64{
 	"k":  1000,                      // kilo
 	"h":  100,                       // hecto
 	"da": 10,                        // deka
-	"":   1,                         // not real dummy stopper
+	"":   1,                         // not real, dummy stopper
 	"d":  .1,                        // deci
 	"c":  .01,                       // centi
 	"m":  .001,                      // milli
@@ -138,6 +138,7 @@ func pif(val int64, units string, w, p int, okw, okp bool, order []string) strin
 	}
 	if val == 0 {
 		p = 1
+		okp = true
 	}
 
 	//fs := fmt.Sprintf("%%s%%%d.%dd %%s%%s", w, p)

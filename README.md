@@ -10,18 +10,11 @@ For example you can use flags like the block size argument below:
 		% ddlikecommand file1 file2 -blocksize=1Ki
 
 2. Human readable formatted output with optional units.
-Variables that use one of the two new types can printed in human readable format using the %[hH] format character, optionally with a unit string that is located inside the variable. Lower case 'h' is used to format using decimal SI suffixes and upper case 'H" is used to format using power of two SI suffixes. For example:
-
-		var size Int64 = Int64{3 * 1024 * 1024 * 1024, "B"}
-		var speed Float64 = Float64{2100000, "bps"}
-		fmt.Printf("size=%H, speed=%0.2h\n", size, speed)
-		// yields:
-		
-		size=3 GiB, speed=2.10 Mbps
+Variables that use one of the two new types can printed in human readable format using the %[hH] format character, optionally with a unit string that is located inside the variable. Lower case 'h' is used to format using decimal SI suffixes and upper case 'H" is used to format using power of two SI suffixes.
 
 All standard SI unit prefixes are supported. In keeping with the SI standard "Ki" and it's ilk are used to multiply by 1024 and not "k" which is used to multiply by 1000.
 
-##The Two New Types
+##Two New Types
 This package "extends" the "flags" package by adding two new types and corresponding Set(string) methods. Use "flag.Var" to "register" a new flag with one of the new types.
 
 		type Int64 struct {
@@ -34,15 +27,25 @@ This package "extends" the "flags" package by adding two new types and correspon
 		}
 V is for "value" and U is for the optional "units" string.
 
-##Usage and Example
-	var blocksize hrff.Int64 = Int64{V: 4096, U: ""}
+##Example of input
 
+	var blockSize hrff.Int64 = Int64{V: 4096, U: ""}
 	func main() {
-		flag.Var(&blocksize, "blocksize", "blocksize for copy")
+		flag.Var(&blockSize, "blocksize", "blocksize for copy")
 		flag.Parse()
-		fmt.Printf(blocksize=%H\n", blocksize)
-		copy(src, dot, blocksize.V)
+		fmt.Printf(blocksize=%H\n", blockSize)
+		copy(src, dot, blockSize)
 	}
+	
+##Example of output
+
+		var size = hrff.Int64{3 * 1024 * 1024 * 1024, "B"}
+		var speed = hrff.Float64{2100000, "bps"}
+		fmt.Printf("size=%H, speed=%0.2h\n", size, speed)
+		// yields:
+		
+		size=3 GiB, speed=2.10 Mbps
+
 
 ##Bugs
 1. Input arguments don't allow a space between the number and the units. Therefore input format is not symmetric with respect to output format which is somewhat troubling. Can be fixed but would require quotes bs="1 Ki" which kind of negates the use-fullness of the fix.
