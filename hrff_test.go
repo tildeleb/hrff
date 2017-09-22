@@ -165,8 +165,50 @@ func Example013() {
 	// Output: v=-1,234,567
 }
 
+<<<<<<< HEAD
 func Example015() {
 	var v = Float64{0, "B"}
 	fmt.Printf("v=%h\n", v)
 	// Output: v=0 B
+}
+=======
+func Example014() {
+	fmt.Printf("%h\n", Int64{V: 0, U: "foobars"})
+	// Output: 0 foobars
+}
+
+func Example015() {
+	fmt.Printf("%h\n", Float64{V: 0, U: "foobars"})
+	// Output: 0 foobars
+}
+
+func Example016() {
+	fmt.Printf("%h\n", Int64{V: 11, U: "foobars"})
+	// Output: 0 foobars
+}
+
+func Example017() {
+	fmt.Printf("%h\n", Float64{V: 11, U: "foobars"})
+	// Output: 0 foobars
+}
+
+func Example018() {
+	fmt.Printf("%h\n", Int64{V: 999, U: "foobars"})
+	// Output: 999 foobars
+}
+
+func Example019() {
+	fmt.Printf("%h\n", Float64{V: 999, U: "foobars"})
+	// Output: 999 foobars
+}
+
+
+func Example020() {
+	fmt.Printf("%h\n", Int64{V: 1000, U: "foobars"})
+	// Output: 1 kfoobars
+}
+
+func Example021() {
+	fmt.Printf("%h\n", Float64{V: 1000, U: "foobars"})
+	// Output: 1 kfoobars
 }

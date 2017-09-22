@@ -1,9 +1,15 @@
-#Human Readable Flags and Formatting (Beta)
+Human Readable Flags and Formatting (Beta)
+==========================================
 
+Motivation
+----------
+Working with disks and I/O subsystems I grew frustrated with not having a way to easy format and input large and small numbers in a hmany readbale way. Unix pioneered this on the input side with the dd command which has had a convienient way to specify a block size with something like `bs=1k` since the 1970's. This package has a complete list of SI unit prefixes and these can be combined with numbers to get the same effect as dd. I am not aware of any other previous attempts to add human readable format commands to printf. I choose %h and %H as the human readable format characters and the simplest way to describe the capability is that 1000000000000 will be printed as `1 T` and option units can be specifed and printed as `1 TB`.  
+
+Capabilities
+------------
 Provides two capabilities:
 
-1. Human readable command line arguments.
-SI unit prefixes can be used as multiplicative suffixes to numeric flags on the Go command line CLI. 
+1. Human readable command line arguments. That is SI unit prefixes can be used as multiplicative suffixes to numeric flags on the Go command line CLI. 
 For example you can use flags like the block size argument below:
 
 		% # set block size to 1024

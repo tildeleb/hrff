@@ -11,19 +11,21 @@ import "strconv"
 
 // SIsufixes is public so you can add a prefix if you want to
 var SIsufixes = map[string]float64{
-	"H": 1000000000000000000000000000, // hella (one for the team)
 
-	"Y":  1000000000000000000000000, // yota
-	"Z":  1000000000000000000000,    // zetta
-	"E":  1000000000000000000,       // exa
-	"P":  1000000000000000,          // peta
-	"T":  1000000000000,             // tera
-	"G":  1000000000,                // giga
-	"M":  1000000,                   // mega
-	"k":  1000,                      // kilo
-	"h":  100,                       // hecto
-	"da": 10,                        // deka
-	"":   1,                         // not real, dummy stopper
+	"geop":   10000000000000000000000000000000, // geop 10^30
+	"bronto": 10000000000000000000000000000,    // bronto 10^27
+	"Y":      1000000000000000000000000,        // yota
+	"Z":      1000000000000000000000,           // zetta
+	"E":      1000000000000000000,              // exa
+	"P":      1000000000000000,                 // peta
+	"T":      1000000000000,                    // tera
+	"G":      1000000000,                       // giga
+	"M":      1000000,                          // mega
+	//"my": 10000,				     // prefix myria- (my-) was formerly used for 10^4 but now depricated
+	"k":  1000,                      // kilo, chilo in Italian
+	"h":  100,                       // hecto, etto in Italian
+	"da": 10,                        // SI: deca, NIST: deka
+	"":   1,                         // not real dummy stopper
 	"d":  .1,                        // deci
 	"c":  .01,                       // centi
 	"m":  .001,                      // milli
@@ -47,9 +49,9 @@ var SIsufixes = map[string]float64{
 	"Yi": 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, // yobi
 }
 
-var order = []string{"H", "Y", "Z", "E", "P", "T", "G", "M", "k", "h", "da", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
+var order = []string{"geop", "bronto", "Y", "Z", "E", "P", "T", "G", "M", "k", "h", "da", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
 var order2 = []string{"Yi", "Zi", "Ei", "Pi", "Ti", "Gi", "Mi", "Ki", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
-var skips = map[string]bool{"h": true, "da": true, "d": true, "c": true}
+var skips = map[string]bool{"h": true, "da": true, "d": true, "c": true} // The sufixes h, da, d, c aren't much used for scienttific work, skip them
 
 // considering removing this
 func Classic() {
@@ -61,6 +63,18 @@ func Classic() {
 	SIsufixes["E"] = SIsufixes["Ei"]
 	SIsufixes["Z"] = SIsufixes["Zi"]
 	SIsufixes["Y"] = SIsufixes["Yi"]
+}
+
+func RemoveNominal() {
+	delete(SIsufixes, "h")
+	delete(SIsufixes, "da")
+	delete(SIsufixes, "d")
+	delete(SIsufixes, "c")
+}
+
+func UseHella() {
+	delete(SIsufixes, "bronto")
+	SIsufixes["H"] = 10000000000000000000000000000 // hella (one for the team)
 }
 
 // Use this type isntead of int
@@ -81,7 +95,7 @@ type Int64 struct {
 	U string
 }
 
-func Skip(sip string, b bool) {
+func AddSkip(sip string, b bool) {
 	skips[sip] = b
 }
 
@@ -145,7 +159,7 @@ func pif(val int64, units string, w, p int, okw, okp bool, order []string) strin
 	fs := ""
 	switch {
 	case okw == false && okp == false:
-		fs = fmt.Sprintf("%%s%%%d.%dd %%s%%s", 0, 0)
+		fs = fmt.Sprintf("%%s%%%d.%dd %%s%%s", 0, 1)
 	case okw == false && okp == true:
 		fs = fmt.Sprintf("%%s%%.%dd %%s%%s", p)
 	case okw == true && okp == false:
@@ -202,18 +216,18 @@ func pff(val float64, units string, w, p int, okw, okp bool, order []string) str
 		if skips[sip] {
 			continue
 		}
-		//		fmt.Printf("pff: %q, %f <= %f\n", sip, SIsufixes[sip], val)
+		//fmt.Printf("pff: %q, %f <= %f\n", sip, SIsufixes[sip], val)
 		if SIsufixes[sip] == 1 {
 			if val == 0.0 || val == 1.0 {
 				break
 			}
-			continue
+			//continue
 		}
 		if SIsufixes[sip] <= val {
 			break
 		}
 	}
-	//	fmt.Printf("pff: val=%f, sip=%q\n", val, sip)
+	//fmt.Printf("pff: val=%f, sip=%q\n", val, sip)
 	val = val / SIsufixes[sip]
 	str := fmt.Sprintf(fs, sgn, val, sip, units)
 	return str
