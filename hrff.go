@@ -182,7 +182,11 @@ func pif(val int64, units string, w, p int, okw, okp bool, order []string) strin
 	//fmt.Printf("pif: sip=%q\n", sip)
 	val = val / int64(SIsufixes[sip])
 	//fmt.Printf("pif: val=%d\n", val)
-	return fmt.Sprintf(fs, sgn, val, sip, units)
+	str := fmt.Sprintf(fs, sgn, val, sip, units)
+	if str[len(str)-1] == ' ' {
+		str = str[:len(str)-1]
+	}
+	return str
 }
 
 // print floating format
@@ -230,6 +234,9 @@ func pff(val float64, units string, w, p int, okw, okp bool, order []string) str
 	//fmt.Printf("pff: val=%f, sip=%q\n", val, sip)
 	val = val / SIsufixes[sip]
 	str := fmt.Sprintf(fs, sgn, val, sip, units)
+	if str[len(str)-1] == ' ' {
+		str = str[:len(str)-1]
+	}
 	return str
 }
 
