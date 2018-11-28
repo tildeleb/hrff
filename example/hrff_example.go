@@ -2,7 +2,7 @@
 
 package main
 
-import "leb.io/hrff"
+import "github.com/tildeleb/hrff"
 import "fmt"
 import "flag"
 
