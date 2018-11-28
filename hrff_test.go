@@ -2,7 +2,7 @@
 
 package hrff_test
 
-import . "leb.io/hrff"
+import . "github.com/tildeleb/hrff"
 import "flag"
 import "fmt"
 import "testing"
