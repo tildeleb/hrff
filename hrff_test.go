@@ -2,10 +2,13 @@
 
 package hrff_test
 
-import . "leb.io/hrff"
-import "flag"
-import "fmt"
-import "testing"
+import (
+	"flag"
+	"fmt"
+	"testing"
+
+	. "leb.io/hrff"
+)
 
 var _i1 = Int64{V: 2}
 var i1 int64
@@ -93,14 +96,12 @@ func Example002() {
 	fmt.Printf("size=%H, speed=%0.2h\n", size, speed)
 	// Output: size=3 GiB, speed=2.10 Mbps
 }
-
 func Example003() {
 	var v = Int64{0, "B"}
 
 	fmt.Printf("v=%h\n", v)
 	// Output: v=0 B
 }
-
 func Example004() {
 	var v = Int64{1, "B"}
 
@@ -165,13 +166,12 @@ func Example013() {
 	// Output: v=-1,234,567
 }
 
-<<<<<<< HEAD
-func Example015() {
+func Example015a() {
 	var v = Float64{0, "B"}
 	fmt.Printf("v=%h\n", v)
 	// Output: v=0 B
 }
-=======
+
 func Example014() {
 	fmt.Printf("%h\n", Int64{V: 0, U: "foobars"})
 	// Output: 0 foobars
@@ -201,7 +201,6 @@ func Example019() {
 	fmt.Printf("%h\n", Float64{V: 999, U: "foobars"})
 	// Output: 999 foobars
 }
-
 
 func Example020() {
 	fmt.Printf("%h\n", Int64{V: 1000, U: "foobars"})

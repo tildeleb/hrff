@@ -1,4 +1,4 @@
-// Copyright © 2012-2014 Lawrence E. Bakst. All rights reserved.
+// Copyright © 2012-2019 Lawrence E. Bakst. All rights reserved.
 
 // Package hrff (Human Readbale Flags and Formatting)
 // Allows command line arguments like % dd bs=1Mi
@@ -6,8 +6,10 @@
 // Defines two news types, Int64 and Float64 which provide methods for flags to accept these kind of args
 package hrff // import "leb.io/hrff"
 
-import "fmt"
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 // SIsufixes is public so you can add a prefix if you want to
 var SIsufixes = map[string]float64{
@@ -53,7 +55,7 @@ var order = []string{"geop", "bronto", "Y", "Z", "E", "P", "T", "G", "M", "k", "
 var order2 = []string{"Yi", "Zi", "Ei", "Pi", "Ti", "Gi", "Mi", "Ki", "", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"}
 var skips = map[string]bool{"h": true, "da": true, "d": true, "c": true} // The sufixes h, da, d, c aren't much used for scienttific work, skip them
 
-// considering removing this
+// Classic is what life was like before SI
 func Classic() {
 	SIsufixes["K"] = SIsufixes["Ki"]
 	SIsufixes["M"] = SIsufixes["Mi"]
@@ -65,6 +67,7 @@ func Classic() {
 	SIsufixes["Y"] = SIsufixes["Yi"]
 }
 
+// RemoveNominal removes unoffice suffixes
 func RemoveNominal() {
 	delete(SIsufixes, "h")
 	delete(SIsufixes, "da")
@@ -72,33 +75,36 @@ func RemoveNominal() {
 	delete(SIsufixes, "c")
 }
 
+// UseHella allows use of H over bronto
 func UseHella() {
 	delete(SIsufixes, "bronto")
 	SIsufixes["H"] = 10000000000000000000000000000 // hella (one for the team)
 }
 
-// Use this type isntead of int
+// Int is a version of int with a unit
 type Int struct {
 	V int
 	U string
 }
 
-// use this type instead of float64
+// Float64 is a version of float64 with a unit
 type Float64 struct {
 	V float64
 	U string
 }
 
-// use this type instead of int64
+// Int64 is a version of int64 with a unit
 type Int64 struct {
 	V int64
 	U string
 }
 
+// AddSkip adds a skip
 func AddSkip(sip string, b bool) {
 	skips[sip] = b
 }
 
+// NoSkips gets rid of all the skips
 func NoSkips() {
 	for k := range skips {
 		skips[k] = false
@@ -326,7 +332,6 @@ func (r *Int64) Set(s string) error {
 }
 
 func (r *Int) Set(s string) error {
-
 	m, l, _ := getPrefix(s)
 	v, err := strconv.ParseInt(s[:l], 10, 64)
 	if err != nil {
