@@ -184,12 +184,12 @@ func Example015() {
 
 func Example016() {
 	fmt.Printf("%h\n", Int64{V: 11, U: "foobars"})
-	// Output: 0 foobars
+	// Output: 11 foobars
 }
 
 func Example017() {
 	fmt.Printf("%h\n", Float64{V: 11, U: "foobars"})
-	// Output: 0 foobars
+	// Output: 11 foobars
 }
 
 func Example018() {
@@ -210,4 +210,9 @@ func Example020() {
 func Example021() {
 	fmt.Printf("%h\n", Float64{V: 1000, U: "foobars"})
 	// Output: 1 kfoobars
+}
+
+func Example022() {
+	fmt.Printf("%D\n", Int64{V: 1000000, U: "foobars"})
+	// Output: 1,000,000
 }
